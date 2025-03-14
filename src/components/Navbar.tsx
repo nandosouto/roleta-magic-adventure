@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
           <img
             src="https://i.ibb.co/jPn4HzH9/ROLETA-1.png" 
             alt="Roleta Premiada"
-            className={`transition-all duration-300 ${scrolled ? 'h-10' : 'h-14'} animate-pulse-glow`}
+            className={`transition-all duration-300 ${scrolled ? 'h-14' : 'h-20'} animate-pulse-glow`}
             style={{ '--glow-color': 'rgba(0, 123, 255, 0.5)' } as React.CSSProperties}
             onError={(e) => {
               const target = e.target as HTMLImageElement;

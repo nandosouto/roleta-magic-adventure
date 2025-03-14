@@ -154,31 +154,37 @@ const PrizeWheel: React.FC<PrizeWheelProps> = ({
           // SVG path for the segment
           const pathData = `M ${x1},${y1} L ${x2},${y2} A ${radius},${radius} 0 ${largeArcFlag} 1 ${x3},${y3} Z`;
           
-          // Calculate text rotation to display text horizontally
+          // Calculate text rotation to display text diagonally
+          // Rotate text to be more diagonal within each segment
           const textRotation = segment.middleDegree + 90;
+          
+          // Calculate text position to be aligned properly along the radius
+          // These values are used for text positioning along the radius
+          const textDistance = 25; // Distance from center (0-50, where 50 is edge)
+          const textX = centerX + textDistance * Math.cos(segment.middleDegree * (Math.PI / 180));
+          const textY = centerY + textDistance * Math.sin(segment.middleDegree * (Math.PI / 180));
           
           return (
             <div key={idx} className="absolute inset-0">
               <svg width="100%" height="100%" viewBox="0 0 100 100" className="absolute inset-0">
                 <path
                   d={pathData}
-                  fill={segment.color}
-                  fillOpacity="0.8"
-                  stroke="rgba(255,255,255,0.3)"
+                  fill="transparent"
+                  stroke="rgba(255,255,255,0.6)"
                   strokeWidth="0.5"
-                  className="transition-all duration-300 hover:fill-opacity-1"
+                  className="transition-all duration-300"
                 />
                 <text
-                  x="50"
-                  y="30"
-                  fill={segment.textColor || "white"}
+                  x={textX}
+                  y={textY}
+                  fill="white"
                   fontSize="3.5"
                   fontWeight="bold"
                   textAnchor="middle"
                   className="prize-text neon-text pointer-events-none"
                   style={{
                     transform: `rotate(${textRotation}deg)`,
-                    transformOrigin: 'center center',
+                    transformOrigin: `${textX}px ${textY}px`,
                   }}
                 >
                   {segment.text}
