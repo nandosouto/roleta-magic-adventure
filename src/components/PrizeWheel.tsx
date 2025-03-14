@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
 
@@ -133,7 +134,8 @@ const PrizeWheel: React.FC<PrizeWheelProps> = ({
           
           const textRotation = segment.middleDegree + 90;
           
-          const textDistance = 28;
+          // Adjust text distance from center based on segment size
+          const textDistance = 32; // Increased distance from center
           const textX = centerX + textDistance * Math.cos(segment.middleDegree * (Math.PI / 180));
           const textY = centerY + textDistance * Math.sin(segment.middleDegree * (Math.PI / 180));
           
@@ -151,8 +153,9 @@ const PrizeWheel: React.FC<PrizeWheelProps> = ({
                   x={textX}
                   y={textY}
                   fill="white"
-                  fontSize="10"
-                  fontWeight="bold"
+                  fontSize="8"
+                  fontFamily="Arial, sans-serif"
+                  fontWeight="normal"
                   textAnchor="middle"
                   className="prize-text neon-text pointer-events-none"
                   style={{
