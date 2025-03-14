@@ -134,8 +134,16 @@ const PrizeWheel: React.FC<PrizeWheelProps> = ({
           
           const textRotation = segment.middleDegree + 90;
           
+          // Calculate segment width to determine appropriate text size and position
+          const segmentWidth = segment.endDegree - segment.startDegree;
+          
           // Adjust text distance from center based on segment size
-          const textDistance = 32; // Increased distance from center
+          // Smaller segments text will be closer to center
+          const textDistance = segmentWidth < 40 ? 28 : 35;
+          
+          // Determine font size based on segment width and text length
+          const fontSize = calculateFontSize(segment.text.length, segmentWidth);
+          
           const textX = centerX + textDistance * Math.cos(segment.middleDegree * (Math.PI / 180));
           const textY = centerY + textDistance * Math.sin(segment.middleDegree * (Math.PI / 180));
           
@@ -153,7 +161,7 @@ const PrizeWheel: React.FC<PrizeWheelProps> = ({
                   x={textX}
                   y={textY}
                   fill="white"
-                  fontSize="8"
+                  fontSize={fontSize}
                   fontFamily="Arial, sans-serif"
                   fontWeight="normal"
                   textAnchor="middle"
@@ -192,6 +200,20 @@ const PrizeWheel: React.FC<PrizeWheelProps> = ({
       </button>
     </div>
   );
+};
+
+// Helper function to calculate appropriate font size based on text length and segment width
+const calculateFontSize = (textLength: number, segmentWidth: number): number => {
+  // Base size adjustments
+  if (textLength > 30) {
+    return 3; // Very small text for very long strings
+  } else if (textLength > 20) {
+    return 4; // Smaller text for long strings
+  } else if (textLength > 10) {
+    return 5; // Medium text for medium length strings
+  } else {
+    return 6; // Regular text for short strings
+  }
 };
 
 export default PrizeWheel;
